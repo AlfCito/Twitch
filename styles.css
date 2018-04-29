@@ -1,0 +1,98 @@
+body,
+h1,h2,h3,h4,h5,h6{
+	margin: 0;
+	padding: 0;
+	font-family: 'Maven Pro', sans-serif;
+}
+
+body{
+	background-color: #4b367c;
+}
+
+#container{
+	width: 100vw;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: white;
+}
+
+#title{	
+	text-align: center;
+	padding: 20px;
+}
+
+#cardsContainer{
+	width: 95%;
+	margin: 0 auto;
+}
+
+.card{
+	border: 2px grey solid;
+	margin: 15px 0px;
+}
+
+.card-header{
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-size: cover;
+	background-position: center;
+}
+
+.offline .card-header{
+	-moz-filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+    -o-filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.name{
+	color: white;
+}
+
+.logo{
+	width: 50px;
+}
+
+.info{
+	padding: 10px 5px;
+}
+
+.offline{
+	background-color: grey;
+}
+
+@media (min-width: 576px) { 
+	#container{
+	 width: 98vw;
+	}
+
+}
+
+@media (min-width: 768px) { 
+
+	#container{
+	 width: 75vw;
+	}
+
+}
+
+@media (min-width: 992px) { 
+
+	#container{
+	 width: 40vw;
+	}
+
+}
+
+@media (min-width: 1200px) { 
+	
+	#container{
+		 width: 25vw;
+		}
+	}
+
+}
