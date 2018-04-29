@@ -1,6 +1,7 @@
 let clientsInfo = [];
 
-let url = 'https://gist.githubusercontent.com/QuincyLarson/2ff6892f948d0b7118a99264fd9c1ce8/raw/e9e12f154d71cf77fc32e94e990749a7383ca2d6/Twitch%2520sample%2520API%2520responses%2520in%2520array%2520form';
+//let url = 'https://gist.githubusercontent.com/QuincyLarson/2ff6892f948d0b7118a99264fd9c1ce8/raw/e9e12f154d71cf77fc32e94e990749a7383ca2d6/Twitch%2520sample%2520API%2520responses%2520in%2520array%2520form';
+let url = 'https://gist.githubusercontent.com/AlfCito/2c85279fed67a0d63b26318c1cbec406/raw/10d603372d87ef5d1973a76fe1fe6372ce077747/twitch_API_test.js';
 
 fetch(url).then(res => {
 		res.json().then(data =>{
@@ -18,7 +19,9 @@ fetch(url).then(res => {
 				}else{
 					clientsInfo.push({
 						'stream' : false,
-						'name' : data[i].display_name
+						'name' : data[i].display_name,
+						'logo' : data[i].logo,
+						'banner' : data[i].profile_banner
 					})
 				}
 			}
@@ -46,10 +49,12 @@ let build = () => {
 			}else{
 				document.querySelector('#cardsContainer').innerHTML += ""+
 				"<div class='card offline'>"+
-				"<div class='card-header'>"+
-				"<div><h2>"+clientsInfo[i].name+"</h2></div>"+
+				"<div class='card-header' style='background-image: url("+ clientsInfo[i].banner +")'>"+
+				"<div><h2 class='name'>"+clientsInfo[i].name+"</h2></div>"+
+				"<div><img class='logo' src='"+clientsInfo[i].logo+"'></div>"+
+				"</div>"+
 				"<div><h4>Offline</h4></div>"+
-				"</div></div>"
+				"</div>"
 			}
 
 
