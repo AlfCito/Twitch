@@ -39,17 +39,20 @@ let build = () => {
 
 			if( clientsInfo[i].stream ){
 				document.querySelector('#cardsContainer').innerHTML += ""+
+				"<a href="+clientsInfo[i].url+" target='_blank'>"+
 				"<div class='card'>"+
 				"<div class='card-header' style='background-image: url("+ clientsInfo[i].banner +")'>"+
 				"<div><h2 class='name'>"+clientsInfo[i].name+"</h2></div>"+
 				"<div><img class='logo' src='"+clientsInfo[i].logo+"'></div>"+
 				"</div>"+
-				"<div class='info'><h3>Streaming: </h3>"+clientsInfo[i].status+"</div>"+
-				"</div>"
+				"<div class='stream'><h4>Streaming: </h4></div>"+
+				"<div class='info'>"+clientsInfo[i].status+"</div>"+
+				"</div></a>"
 			}else{
 				document.querySelector('#cardsContainer').innerHTML += ""+
 				"<div class='card offline'>"+
-				"<div class='card-header' style='background-image: url("+ clientsInfo[i].banner +")'>"+
+				"<div class='card-header'>"+
+				"<div class='card-header-bg' style='background-image: url("+ clientsInfo[i].banner +")'></div>"+
 				"<div><h2 class='name'>"+clientsInfo[i].name+"</h2></div>"+
 				"<div><img class='logo' src='"+clientsInfo[i].logo+"'></div>"+
 				"</div>"+
