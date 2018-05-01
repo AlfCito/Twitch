@@ -1,39 +1,74 @@
+'use strict'
+
 let clientsInfo = [];
+let streamers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "RobotCaleb", "noobs2ninjas"];
 
-//let url = 'https://gist.githubusercontent.com/QuincyLarson/2ff6892f948d0b7118a99264fd9c1ce8/raw/e9e12f154d71cf77fc32e94e990749a7383ca2d6/Twitch%2520sample%2520API%2520responses%2520in%2520array%2520form';
-let url = 'https://gist.githubusercontent.com/AlfCito/2c85279fed67a0d63b26318c1cbec406/raw/10d603372d87ef5d1973a76fe1fe6372ce077747/twitch_API_test.js';
+let getData = () => {
 
-fetch(url).then(res => {
-		res.json().then(data =>{
+	let urls = [];
 
-			for( let i = 0; i < data.length-1 ; i++){
-				if( data[i].stream !== null ){
-					clientsInfo.push({
-						'stream' : true,
-						'name' : data[i].stream.display_name,
-						'logo' : data[i].stream.logo,
-						'banner' : data[i].stream.profile_banner,
-						'status' : data[i].stream.status,
-						'url' : data[i].stream.url,
-					})
-				}else{
-					clientsInfo.push({
-						'stream' : false,
-						'name' : data[i].display_name,
-						'logo' : data[i].logo,
-						'banner' : data[i].profile_banner
-					})
-				}
+	for(let i = 0; i < streamers.length; i++){
+	
+		let urlConstructor = "https://wind-bow.glitch.me/twitch-api/channels/"+streamers[i];
+		urls.push(urlConstructor);		
+	}
+
+	Promise.all(urls.map(url =>
+	    fetch(url).then(resp => resp.json())
+	)).then(urlData => {
+
+		urlData.map((value, index) => {
+
+			clientsInfo.push({
+				'name' : value.display_name,
+				'logo' : value.logo,
+				'banner' : value.profile_banner,
+				'status' : value.status,
+				'url' : value.url,
+			})
+		});
+
+		getStream();
+
+	});
+}
+
+let getStream = () => {
+
+	let urls = [];
+
+	for(let i = 0; i < streamers.length; i++){
+	
+		let urlConstructor = "https://wind-bow.glitch.me/twitch-api/streams/"+streamers[i];
+		urls.push(urlConstructor);
+		
+	}
+
+	Promise.all(urls.map(url =>
+	    fetch(url).then(resp => resp.json())
+	)).then(urlData => {
+
+		urlData.map((value, index) => {
+
+			let isStreaming;
+
+			if( value.stream ){
+				isStreaming = true;
+			}else{
+				isStreaming = false;
 			}
 
-			return build();
 
-		})	
-	});
+			clientsInfo[index].stream = isStreaming;
+			
+		});
+
+		return build();
+
+	});	
+}
 
 let build = () => {
-
-	//console.log(clientsInfo);
 
 	for( let i = 0; i < clientsInfo.length ; i++){
 
@@ -50,6 +85,7 @@ let build = () => {
 			"</div></a>"
 		}else{
 			document.querySelector('#cardsContainer').innerHTML += ""+
+			"<a href="+clientsInfo[i].url+" target='_blank'>"+
 			"<div class='card offline show'>"+
 			"<div class='card-header'>"+
 			"<div class='card-header-bg' style='background-image: url("+ clientsInfo[i].banner +")'></div>"+
@@ -57,7 +93,7 @@ let build = () => {
 			"<div><img class='logo' src='"+clientsInfo[i].logo+"'></div>"+
 			"</div>"+
 			"<div><h4>Offline</h4></div>"+
-			"</div>"
+			"</div></a>"
 		}
 	}
 
@@ -65,12 +101,12 @@ let build = () => {
 	document.querySelector('#btn-offline').addEventListener("click", () => {
 
 		var offlineCards = document.getElementsByClassName('offline');
-	    for (i = 0; i < offlineCards.length; i++) {
+	    for (let i = 0; i < offlineCards.length; i++) {
 	    	offlineCards[i].classList.add('show');
 	    }
 
 		var onlineCards = document.getElementsByClassName('online');
-	    for (i = 0; i < onlineCards.length; i++) {
+	    for (let i = 0; i < onlineCards.length; i++) {
 	        onlineCards[i].classList.add('hide');
 	        onlineCards[i].classList.remove('show');
 	    }
@@ -80,12 +116,12 @@ let build = () => {
 	document.querySelector('#btn-online').addEventListener("click", () => {
 
 		var onlineCards = document.getElementsByClassName('online');
-	    for (i = 0; i < onlineCards.length; i++) {
+	    for (let i = 0; i < onlineCards.length; i++) {
 	        onlineCards[i].classList.add('show');
 	    }
 
 	    var offlineCards = document.getElementsByClassName('offline');
-	    for (i = 0; i < offlineCards.length; i++) {
+	    for (let i = 0; i < offlineCards.length; i++) {
 	    	offlineCards[i].classList.add('hide');
 	        offlineCards[i].classList.remove('show');
 	    }
@@ -95,21 +131,19 @@ let build = () => {
 	document.querySelector('#btn-all').addEventListener("click", () => {
 
 		var onlineCards = document.getElementsByClassName('online');
-	    for (i = 0; i < onlineCards.length; i++) {
+	    for (let i = 0; i < onlineCards.length; i++) {
 	        onlineCards[i].classList.add('show');
 	        onlineCards[i].classList.remove('hide');
 	    }
 
 	    var offlineCards = document.getElementsByClassName('offline');
-	    for (i = 0; i < offlineCards.length; i++) {
+	    for (let i = 0; i < offlineCards.length; i++) {
 	        offlineCards[i].classList.add('show');
 	        offlineCards[i].classList.remove('hide');
 	    }
-
 	});
-
-
 }
 
+getData();
 
 
