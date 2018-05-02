@@ -1,7 +1,7 @@
 # Twitch
 Part of the Intermediate Front End Development Projects from FreeCodeCamp.org
 
-
+<img src="images/twitch.jpg" >
 Link: https://alfcito.github.io/Twitch/
 
 ### User Stories:
